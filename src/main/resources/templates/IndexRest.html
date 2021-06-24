@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Javascript Image Slider</title>
+
+    <link rel="stylesheet" href="../static/assets/css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        .container{
+            margin: 0%;
+            width: 100%;
+        }
+        .input-group{
+            width: 20%;
+            margin: auto;
+        }
+        input{
+            margin-top: 10px;
+        }
+        h1{
+            color: darkred;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container" >
+    <form >
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search" id="searchInput">
+            <div class="input-group-btn" >
+                <button class="btn btn-default" id="takePhotos" type="submit"><i class="glyphicon glyphicon-search" ></i></button>
+            </div>
+        </div>
+    </form>
+</div>
+<div id="exception">
+    <h1>Information not found or your IpiKey is outdated, you need to update it !!!</h1>
+    <a href="https://www.flickr.com/services/apps/create/noncommercial/?">Update ApiKey</a>
+</div>
+<div class="slider">
+    <div class="text-box">
+        <p><span id="index"></span>/100</p>
+    </div>
+    <div class="img-box">
+        <img src="https://farm66.staticflickr.com/65535/51265395496_b9c12d8769.jpg" class="slider-img" id="main">
+    </div>
+    <div class="button-group">
+        <button class="btn" onclick="prev()" id="prev">Prev</button>
+        <button class="btn"  onclick="next()" id="next">Next</button>
+    </div>
+</div>
+
+<script src="../static/assets/js/main.js"></script>
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+    $('#exception').hide();
+    $('.slider').show();
+    let images = [];
+    let i = 0;
+    const images_box = document.querySelector('.slider');
+    $(document).ready(function(){
+        $('#takePhotos').click(function (e) {
+            redirect();
+            e.preventDefault();
+            let body = $('#searchInput').val();
+            fetch(`http://localhost:8085/api/photos/${body}`)
+                .then(response => response.json())
+                .then(json => {
+                    for (let j = 0; j < json.length; j++) {
+                        images.push(json[j])
+                    }
+                    if (images.length == 0){
+                        $('#exception').show();
+                        $('.slider').hide();
+                    }
+                })
+        });
+    });
+
+    const slider_img = document.querySelector('.slider-img');
+    let index = document.querySelector('#index');
+
+    function next(){
+        if(i >= images.length-1) i = -1;
+        i++;
+        return setImg();
+    }
+
+    function prev(){
+        if(i <= 0) i = images.length;
+        i--;
+        return setImg();
+    }
+
+    function setImg(){
+        index.innerHTML = i;
+        slider_img.setAttribute('src', images[i]);
+    }
+
+    function redirect(){
+        images = [];
+        i = 0;
+        index.innerHTML = i;
+        slider_img.setAttribute('src','https://farm66.staticflickr.com/65535/51258600988_29af2b93df.jpg')
+    }
+</script>
+
+</body>
+</html>

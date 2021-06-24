@@ -1,0 +1,13 @@
+package uz.developer.webApp.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class FlickrResponse {
+    public Photos photos;
+    public String stat;
+}

@@ -1,0 +1,51 @@
+/*css/style.css */
+
+.container{
+	background: cadetblue;
+	padding: 30px;
+}
+
+.slider{
+	margin:50px auto;
+	width:50%;
+}
+
+#exception{
+	text-align: center;
+}
+
+.text-box{
+	text-align: center;
+}
+
+p{
+	font-size: 20px;
+}
+
+.img-box img{
+	width: 672px;
+	height: 380px;
+}
+
+.button-group{
+	width: 100%;
+}
+
+#next{
+	margin-left: 83%;
+}
+
+.btn{
+	border:none;
+	outline:none;
+	background:#888;
+	padding:10px 30px;
+	font-size: 20px;
+	color:#ddd;
+	cursor: pointer;
+	margin:10px auto;			 
+}
+
+.btn:hover{
+	background: #111;
+}
